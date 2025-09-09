@@ -24,6 +24,19 @@ async def list_products(
             detail="Database error occurred"
         )
 
+@router.get("/{product_id}", response_model=ProductOut)
+async def get_product(product_id: int, db: AsyncSession = Depends(get_db)):
+    try:
+        product = await crud.get_product_by_id(db, product_id)
+        if not product:
+            raise HTTPException(status_code=404, detail="Product not found")
+        return product
+    except SQLAlchemyError:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Database error occurred"
+        )
+    
 @router.get("/search", response_model=List[ProductOut])
 async def search_products(
     name: str = Query(..., min_length=1),

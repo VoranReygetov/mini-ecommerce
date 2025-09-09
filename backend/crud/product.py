@@ -8,6 +8,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Get one product
+async def get_product_by_id(db: AsyncSession, product_id: int) -> Optional[Product]:
+    result = await db.execute(select(Product).filter(Product.id == product_id))
+    return result.scalar_one_or_none()
 
 # Fetch all products
 async def get_all_products(db: AsyncSession) -> List[Product]:
