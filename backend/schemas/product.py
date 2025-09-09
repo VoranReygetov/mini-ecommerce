@@ -12,13 +12,6 @@ class ProductBase(BaseModel):
     category: Optional[str] = None
     image: Optional[str] = None
 
-    @field_validator('price')
-    @classmethod
-    def validate_decimal_price(cls, v: Decimal) -> Decimal:
-        if v < 0:
-            raise ValueError
-        return v
-
 class ProductCreate(ProductBase):
     pass
 

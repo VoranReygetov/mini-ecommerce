@@ -1,10 +1,9 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from core.config import settings
-from contextlib import asynccontextmanager
 
-engine = create_async_engine(settings.DATABASE_URL, echo=True, future=True)
-AsyncSessionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
+engine = create_async_engine(settings.DATABASE_URL)
+AsyncSessionLocal = async_sessionmaker(bind=engine)
 
 class Base(DeclarativeBase):
     """Base for all ORM models"""
