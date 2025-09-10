@@ -8,10 +8,12 @@ export default function ProductList() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(null);
 
+  // Fetch products on initial load
   useEffect(() => {
     loadProducts();
   }, []);
 
+  // Load all products from API
   async function loadProducts() {
     try {
       const data = await fetchProducts();
@@ -21,6 +23,7 @@ export default function ProductList() {
     }
   }
 
+  // Handle search form submit
   async function handleSearch(e) {
     e.preventDefault();
     try {
@@ -35,10 +38,12 @@ export default function ProductList() {
     }
   }
 
+  // Show details page if a product is selected
   if (selected) {
     return <ProductDetails product={selected} onBack={() => setSelected(null)} />;
   }
 
+  // Otherwise, show list view
   return (
     <div className="container">
       <h1>Product List</h1>
